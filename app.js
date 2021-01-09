@@ -26,7 +26,7 @@ async function fetchAllCenturies() {
       const response = await fetch(url);
       const data = await response.json();
       const records = data.records;
-      localStorage.setItem('centuries',json.stringify(centuries.records));
+      localStorage.setItem('centuries',json.stringify(records));
 
         
       return records;
@@ -45,7 +45,7 @@ async function fetchAllClassifications() {
       const response = await fetch(url);
       const data = await response.json();
       const records = data.records;
-      localStorage.setItem('classifications', json.stringfy(classifications.records));
+      localStorage.setItem('classifications', json.stringfy(records));
 
         
       return records;
@@ -84,23 +84,54 @@ async function prefetchCategoryLists() {
 function buildSearchString(){
     const rootUrl = `https://api.harvardartmuseums.org/object?${KEY}`
     const terms = [... $('#search select')].map( function (element){
-        console.log($(element).val());
-        return `${$(element).attr('name')}=${$(element).val()}`;
+    return `${$(`element`).attr('name')}=${$(`element`).val()}`;
     }).join('&');
     const keywords = `keyword=${$('#keywords').val()}`
-    console.log(`${rootUrl}&${terms}&${keywords}`);
     return `${rootUrl}&${terms}&${keywords}`;
 
 };
 
-
 function onFetchStart() {
     $('#loading').addClass('active');
-  }
+};
   
-  function onFetchEnd() {
+function onFetchEnd() {
     $('#loading').removeClass('active');
-  }
+};
+
+function renderPreview(record) {
+  // grab description, primaryimageurl, and title from the record
+  const { description, primaryimageurl, title} = record;
+  /*
+  Template looks like this:
+  */
+  return $(`<div class="object-preview">
+    <a href="#">
+      <img src="${primaryimageurl}" />
+      <h3>${title}</h3>
+      <h3>${description}</h3>
+    </a>
+  </div>`).data('record', record);
+};
+  /*
+  Some of the items might be undefined, if so... don't render them
+
+  With the record attached as data, with key 'record'
+  */
+
+  // return new element
+function updatePreview(records) {
+  const root = $('#preview');
+  $(`.results`).empty();
+  records.forEach(function (record){
+    return root.append(renderPreview(record));
+  });
+
+  // grab the results element, it matches .results inside root
+  // empty it
+  // loop over the records, and append the renderPreview
+};
+
 
 $('#search').on('submit', async function (event) {
     // prevent the default
@@ -112,6 +143,7 @@ $('#search').on('submit', async function (event) {
       // log out both info and records when you get them
         const response = await fetch(buildSearchString());
         const {info, records} = await response.json();
+        updatePreview(records);
         console.log(info);
         console.log(records);
     } catch (error) {
@@ -121,11 +153,10 @@ $('#search').on('submit', async function (event) {
     }
 });
 
-
 function bootstrap(){
     fetchObjects();
     fetchAllCenturies();
     fetchAllClassifications();
     prefetchCategoryLists();
 }
-  bootstrap();
+bootstrap();
