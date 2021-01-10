@@ -123,22 +123,6 @@ function photosHTML(images, primaryimageurl) {
   };
 };
 
-$('#search').on('submit', async function (event) {
-  event.preventDefault();
-  onFetchStart();
-  try {
-      const encodeUrl = encodeURI(buildSearchString())
-      const response = await fetch(encodeUrl);
-      const {info, records} = await response.json();
-      console.log(info, records)
-      updatePreview(records, info);
-  } catch (error) {
-      console.error(error);
-  } finally {
-      onFetchEnd();
-  };
-});
-
 function renderFeature(record) {
   const {title, dated, description, culture, style, technique, medium, dimensions, people, department, division, contact, creditline ,images, primaryimageurl} = record;
  return $(` <div class="object-feature">
@@ -179,6 +163,22 @@ function factHTML(title, content, searchTerm = null) {
     }">${content}</a>`: content}
     </span>`
 };
+
+$('#search').on('submit', async function (event) {
+  event.preventDefault();
+  onFetchStart();
+  try {
+      const encodeUrl = encodeURI(buildSearchString())
+      const response = await fetch(encodeUrl);
+      const {info, records} = await response.json();
+      console.log(info, records)
+      updatePreview(records, info);
+  } catch (error) {
+      console.error(error);
+  } finally {
+      onFetchEnd();
+  };
+});
 
 $('#preview .next, #preview .previous').on('click', async function () {
   onFetchStart();
