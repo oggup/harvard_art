@@ -139,28 +139,6 @@ $('#search').on('submit', async function (event) {
   };
 });
 
-$('#preview .next, #preview .previous').on('click', async function () {
-  onFetchStart();
-  try {
-      let url = $(this).data('url')
-      const response = await fetch(url);
-      const {info, records }= await response.json();
-      updatePreview(records, info);
-  } catch (error) {
-      console.error(error);
-  } finally {
-      onFetchEnd();
-  };        
-});
-
-$('#preview').on('click', '.object-preview', function (event) {
-  event.preventDefault();
-  const objectPreview = $(this).closest('.object-preview');
-  const objectPreviewData = objectPreview.data('record');
-  console.log(objectPreviewData);
-  $('#feature').html(renderFeature(objectPreviewData));
-});
-
 function renderFeature(record) {
   const {title, dated, description, culture, style, technique, medium, dimensions, people, department, division, contact, creditline ,images, primaryimageurl} = record;
  return $(` <div class="object-feature">
@@ -193,19 +171,47 @@ function searchURL(searchType, searchString) {
 };
   
 function factHTML(title, content, searchTerm = null) {
-    // if content is empty or undefined, return an empty string ''
-  
-    // otherwise, if there is no searchTerm, return the two spans
-  
-    // otherwise, return the two spans, with the content wrapped in an anchor tag
-    if (!content){
-      return ""
-    }
-    return `
-    ${content ? `<span class="title">${title}</span>`: ""}
-    ${content ? `<span class="content"><a href=${searchURL(content, searchTerm)}>${ content}</a></span>` : "" }`
+  if (!content){
+      return '';
+    } 
+    return `  <span class="title">${ title }</span>
+    <span class="content">${searchTerm && content ? `<a href="${searchURL(content, searchTerm)}${encodeURI(content.split('-').join('|')) 
+    }">${content}</a>`: content}
+    </span>`
 };
 
+$('#preview .next, #preview .previous').on('click', async function () {
+  onFetchStart();
+  try {
+      let url = $(this).data('url')
+      const response = await fetch(url);
+      const {info, records }= await response.json();
+      updatePreview(records, info);
+  } catch (error) {
+      console.error(error);
+  } finally {
+      onFetchEnd();
+  };        
+});
+
+$('#preview').on('click', '.object-preview', function (event) {
+  event.preventDefault();
+  const objectPreview = $(this).closest('.object-preview');
+  const objectPreviewData = objectPreview.data('record');
+  console.log(objectPreviewData);
+  $('#feature').html(renderFeature(objectPreviewData));
+});
+
+$('#feature').on('click', 'a', async function (event) {
+  // read href off of $(this) with the .attr() method
+
+  // prevent default
+
+  // call onFetchStart
+  // fetch the href
+  // render it into the preview
+  // call onFetchEnd
+});
 function bootstrap(){
     fetchObjects();
     prefetchCategoryLists();
