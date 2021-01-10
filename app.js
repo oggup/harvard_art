@@ -11,7 +11,7 @@ function onFetchEnd() {
 
 async function fetchObjects() {
   const url = `${ BASE_URL }/object?${ KEY }`;
-  onFetchStart();
+
   try {
     const response = await fetch(url);
     const data = await response.json();
@@ -20,8 +20,6 @@ async function fetchObjects() {
 
   } catch (error) {
     console.error("whoops");
-  }finally {
-    onFetchEnd();
   };
 };
 
@@ -43,7 +41,7 @@ async function fetchAllCenturies() {
 
 async function fetchAllClassifications() {
   const url = `${ BASE_URL }/classification?${ KEY }&size=100&sort=name`;
-  onFetchStart();
+  
   if (localStorage.getItem('classifications')) {
       return JSON.parse(localStorage.getItem('classifications'));
   };  
@@ -55,9 +53,7 @@ async function fetchAllClassifications() {
     return records;
   } catch (error) {
       console.error(error);
-  } finally {
-      onFetchEnd();
-  };
+  }; 
 };
 
 async function prefetchCategoryLists() {
