@@ -115,17 +115,17 @@ function renderPreview(record) {
 };
   /*
   Some of the items might be undefined, if so... don't render them
-
   With the record attached as data, with key 'record'
   */
 
   // return new element
 function updatePreview(records) {
   const root = $('#preview');
-  $(`.results`).empty();
-  records.forEach(function (record){
-    return root.append(renderPreview(record));
-  });
+  const resultsEl = root.find('.results');
+  resultsEl.empty();
+  resultsEl.append(records.map(renderPreview));
+
+
 
   // grab the results element, it matches .results inside root
   // empty it
