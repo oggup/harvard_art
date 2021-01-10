@@ -212,12 +212,8 @@ function factHTML(title, content, searchTerm = null) {
  `;
   };
 
-
-
 function bootstrap(){
     fetchObjects();
-    fetchAllCenturies();
-    fetchAllClassifications();
     prefetchCategoryLists();
 }
 bootstrap();
