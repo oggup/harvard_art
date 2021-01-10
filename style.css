@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Parisienne|Roboto|Playfair+Display|Roboto+Condensed&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap');
 
 * {
   border: 0;
@@ -29,7 +29,7 @@
 }
 
 #title h1 {
-  font-family: 'Parisienne', cursive;
+  font-family: 'Cinzel';
   font-size: 3.2rem;
 }
 
