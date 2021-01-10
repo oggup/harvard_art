@@ -60,7 +60,7 @@ async function fetchAllClassifications() {
   };
 };
 
-async function prefetchCategoryLists() { // reordered boiler plate module 1
+async function prefetchCategoryLists() {
   try {
     const [classifications, centuries] = await Promise.all([
        fetchAllClassifications(),
@@ -86,7 +86,7 @@ function buildSearchString() {
   const keyWord = $('#keywords').val()
   const url = `${BASE_URL}/object?${KEY}&classification=${selectClass}&century=${selectCentury}&keyword=${keyWord}`;
   return url;
-}
+};
 
 function renderPreview(record) {
   const { description, primaryimageurl, title} = record;
@@ -208,9 +208,8 @@ function factHTML(title, content, searchTerm = null) {
     }
     return `
     ${content ? `<span class="title">${title}</span>`: ""}
-    ${content ? `<span class="content"><a href=${searchURL(content, searchTerm)}>${ content}</a></span>` : "" }
- `;
-  };
+    ${content ? `<span class="content"><a href=${searchURL(content, searchTerm)}>${ content}</a></span>` : "" }`
+};
 
 function bootstrap(){
     fetchObjects();
