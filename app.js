@@ -94,7 +94,6 @@ function renderPreview(record) {
     <a href="#">
       ${primaryimageurl ? `<img src="${primaryimageurl}" />` : ""}
       ${title ? `<h3>${title}</h3>` : ""}
-      ${description ? `<h3>${description}</h3>` : ""}
     </a>
   </div>`).data('record', record);
 };
