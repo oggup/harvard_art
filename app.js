@@ -51,7 +51,7 @@ async function fetchAllClassifications() {
     const response = await fetch(url);
     const data = await response.json();
     const records = data.records;
-    localStorage.setItem('classifications', JSON.stringfy(records));
+    localStorage.setItem('classifications', JSON.stringify(records));
     return records;
   } catch (error) {
       console.error(error);
