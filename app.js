@@ -201,29 +201,24 @@ $('#preview').on('click', '.object-preview', function (event) {
   $('#feature').html(renderFeature(objectPreviewData));
 });
 
-// $('#feature').on('click', 'a', async function (event) {
-//   // read href off of $(this) with the .attr() method
-
-//   // prevent default
-
-//   // call onFetchStart
-//   // fetch the href
-//   // render it into the preview
-//   // call onFetchEnd
-//   const url = $(this).attr('href');
-//   preventDefault();
-//   try {
-//   const response = await fetch(url);
-//   const data = await response.json();
-//   return data;  
- 
-//   } catch (error) {
-//   console.error("whoops");
-//   };
-
+$('#feature').on('click', 'a', async function (event) {
+  const url = $(this).attr('href');
+  event.preventDefault();
+  console.log(url);
+  onFetchStart();
+  try {
+  const response = await fetch(url);
+  const { info, records } = await response.json();
+  updatePreview(records, info);
+  } catch (error) {
+  console.error("whoops");
+  }finally {
+    onFetchEnd();
+  };
+});  
 
 function bootstrap(){
     fetchObjects();
     prefetchCategoryLists();
-}
+};
 bootstrap();
