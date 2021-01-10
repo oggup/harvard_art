@@ -85,7 +85,7 @@ function buildSearchString() {
 };
 
 function renderPreview(record) {
-  const { description, primaryimageurl, title} = record;
+  const { primaryimageurl, title} = record;
   return $(`<div class="object-preview">
     <a href="#">
       ${primaryimageurl ? `<img src="${primaryimageurl}" />` : ""}
@@ -203,6 +203,7 @@ $('#preview').on('click', '.object-preview', function (event) {
 
 $('#feature').on('click', 'a', async function (event) {
   const url = $(this).attr('href');
+  if (url.startsWith('mailto')) { return; };
   event.preventDefault();
   console.log(url);
   onFetchStart();
