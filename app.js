@@ -158,9 +158,8 @@ function factHTML(title, content, searchTerm = null) {
   if (!content){
       return '';
     } 
-    return `  <span class="title">${ title }</span>
-    <span class="content">${searchTerm && content ? `<a href="${searchURL(content, searchTerm)}${encodeURI(content.split('-').join('|')) 
-    }">${content}</a>`: content}
+    return `<span class="title">${ title }</span>
+    <span class="content">${searchTerm && content ? `<a href="${searchURL(content, searchTerm)}${encodeURI(content)}">${content}</a>`: content}
     </span>`
 };
 
@@ -202,16 +201,27 @@ $('#preview').on('click', '.object-preview', function (event) {
   $('#feature').html(renderFeature(objectPreviewData));
 });
 
-$('#feature').on('click', 'a', async function (event) {
-  // read href off of $(this) with the .attr() method
+// $('#feature').on('click', 'a', async function (event) {
+//   // read href off of $(this) with the .attr() method
 
-  // prevent default
+//   // prevent default
 
-  // call onFetchStart
-  // fetch the href
-  // render it into the preview
-  // call onFetchEnd
-});
+//   // call onFetchStart
+//   // fetch the href
+//   // render it into the preview
+//   // call onFetchEnd
+//   const url = $(this).attr('href');
+//   preventDefault();
+//   try {
+//   const response = await fetch(url);
+//   const data = await response.json();
+//   return data;  
+ 
+//   } catch (error) {
+//   console.error("whoops");
+//   };
+
+
 function bootstrap(){
     fetchObjects();
     prefetchCategoryLists();
