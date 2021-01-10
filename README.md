@@ -1,1 +1,1 @@
-Using fetch, await, asyn functions, try, and catch methods with Harvard At Collection's API in order to make a website with a searchable datanase.
+Using fetch, await, async functions, try, and catch methods with Harvard At Collection's API in order to make a website with a searchable datanase.
